@@ -100,12 +100,11 @@ products.forEach((product) => {
 })
 var filterList = []
 var tags = document.getElementsByName("tags")
-console.log(tags)
+
 tags.forEach((tag) => {
     tag.addEventListener("change", (e) => {
         if (e.target.checked) {
             filterList.push(e.target.value)
-            console.log(filterList)
             update()
         }
         else {
@@ -119,12 +118,8 @@ function update() {
     for (var i = 0; i < productList.length; i++) {
         var check = false
         var product = productList[i]
-        console.log(product)
         var temp = product.querySelector("tags").innerHTML
-        console.log("elemen" + temp)
         const tempFilterArray = temp.split(',');
-        console.log("tempfilterarray" + tempFilterArray)
-        console.log("filterlist" + filterList)
         filterList.forEach((j) => {
             tempFilterArray.forEach((i) => {
                 if (j == i) {
@@ -140,3 +135,25 @@ function update() {
         }
     };
 }
+
+/*Search functionality*/
+
+let search = document.getElementById('search');
+let productContainer = document.getElementById('productContainer');
+let productList = productContainer.querySelectorAll('div');
+
+search.addEventListener('keyup', function (event) {
+    let enteredValue = event.target.value.toUpperCase();
+
+    for (count = 0; count < productList.length; count = count + 1) {
+
+        let productName = productList[count].querySelector('h1').textContent;
+
+        if (productName.toUpperCase().indexOf(enteredValue) < 0) {
+            productList[count].style.display = 'none';
+        }
+        else {
+            productList[count].style.display = 'block';
+        }
+    }
+});
